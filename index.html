@@ -1,51 +1,49 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0,viewport-fit=cover">
-    <title>安全提示</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>腾讯安全中心</title>
+    <style>
+        #imageToControl {
+            display: none; /* 确保图片默认是可见的 */
+            width: 100%; /* 根据需要调整图片宽度 */
+            max-width: 100%; /* 图片最大宽度为100% */
+            height: auto; /* 高度自适应 */
+        }
+    </style>
 </head>
 <body>
-    <div id="tips" style="font-size:25px;text-align: center;line-height: 50px;"></div>
-    <script>
-    
-    var url = document.location.toString();
-    var urlParmStr = url.slice(url.indexOf('=')+1);
-    var ua = navigator.userAgent.toLowerCase();
-    var isQQ = ua.indexOf('qq') != -1;
-    var isWeixin = ua.indexOf('micromessenger') != -1;
-    var isAndroid = ua.indexOf('android') != -1;
-    var isIos = (ua.indexOf('iphone') != -1) || (ua.indexOf('ipad') != -1);
 
-    var notice_openBrowser_wx = "<h2>剩余支付额度不多，请尽快支付，避免被抢单</h2><br><br><h2 style='color:red'>请您点击右上角的三个点，通过在浏览器打开本页面。</h2>";
-    var notice_openBrowser_qq = "<h2>剩余支付额度不多，请尽快支付，避免被抢单</h2><br><br><h2 style='color:red'>请您点击右上角的三个点，选择“浏览器”打开本页面。</h2>";
+    <!-- 图片元素 -->
+    <img id="imageToControl" src="/aaa.png" alt="示例图片">
 
-    // 判断是不是在微信客户端打开
-    if(isWeixin) {
-        // 判断是在Android的微信客户端还是Ios的微信客户端
-        if (isAndroid) {
-            document.getElementById("tips").innerHTML=notice_openBrowser_wx;
-        }else if (isIos) {
-            document.getElementById("tips").innerHTML=notice_openBrowser_wx;
-        }else{
-            document.getElementById("tips").innerHTML=notice_openBrowser_wx;
-        }
-    } else if(isQQ) {
-        // 判断是在Android的微信客户端还是Ios的微信客户端
-        if (isAndroid) {
-            document.getElementById("tips").innerHTML=notice_openBrowser_qq;
-        }else if (isIos) {
-            document.getElementById("tips").innerHTML=notice_openBrowser_qq;
-        }else{
-            document.getElementById("tips").innerHTML=notice_openBrowser_qq;
-        }
-    } else {
-        // 不是微信客户端，直接可以访问链接
-        if (urlParmStr == url){
-            urlParmStr = url;
-        }
-        location.href=urlParmStr;
-    }
-</script
+	<script>
+		var image = document.getElementById('imageToControl');
+		var url = document.location.toString();
+		var urlParmStr = url.slice(url.indexOf('=')+1);
+		var u = navigator.userAgent;
+		var ua = /QBWebView|TencentTravelere/i.test(u) ? '1' : 
+				 /MQQBrowser|QQThem/i.test(u) ? '2' : 
+				 /MicroMessenger|WeChat|Weixin/i.test(u) ? '3' : '4';
+	    console.log(ua)
+		if(ua == 1) {
+			if (urlParmStr == url){
+				urlParmStr = url;
+			}
+			location.href=urlParmStr;
+		} else if(ua == 2) {
+			// 判断是在Android的微信客户端还是Ios的微信客户端
+			image.style.display = 'block';
+		} else if(ua == 3) {
+			// 判断是在Android的微信客户端还是Ios的微信客户端
+			image.style.display = 'block';
+		} else {
+			if (urlParmStr == url){
+				urlParmStr = url;
+			}
+			//location.href=urlParmStr;
+		}
+	</script>
 </body>
 </html>
